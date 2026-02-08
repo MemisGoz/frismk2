@@ -37,11 +37,10 @@ window.addEventListener("load", () => {
     });
 
     gsap.from(".btn", {
-        opacity: 1,
-        y: 20,
-        duration: 0.6,
-        stagger: 0.15,
-        delay: 0.4
+        opacity: 0,
+        y: 40,
+        duration: 1,
+        ease: "power3.out"
     });
 
     gsap.to(".hero", {

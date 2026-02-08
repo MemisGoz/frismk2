@@ -25,7 +25,7 @@ body {
 
 /* ========== GLOBAL CLASSES ========== */
 .container {
-    max-width: 1200px;
+    max-width: 1500px;
     padding: 0 1.5rem;
     margin: 0 auto;
 }
@@ -75,7 +75,7 @@ body {
 }
 
 .logo {
-    font-size: 1.4rem;
+    font-size: 2.4rem;
     font-weight: 700;
     text-decoration: none;
     color: var(--text-light);
@@ -94,7 +94,8 @@ body {
 .nav-links a {
     text-decoration: none;
     color: var(--text-light);
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 22px
 }
 
 .header.scrolled .nav-links a {
@@ -104,16 +105,18 @@ body {
 .nav-actions {
     display: flex;
     gap: 1rem;
+   align-items: center;
 }
 
 .phone-btn {
+   border: 1px solid var(--secondary);
     color: var(--text-light);
     text-decoration: none;
-    font-weight: 500;
 }
 
 .header.scrolled .phone-btn {
     color: var(--text-dark);
+    border: 1px solid var(--primary);
 }
 
 /* Burger */
