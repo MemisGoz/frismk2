@@ -1,9 +1,11 @@
 // ========== NAV SCROLL EFFECT ==========
+gsap.registerPlugin(ScrollTrigger);
 const header = document.querySelector(".header");
 
 window.addEventListener("scroll", () => {
     header.classList.toggle("scrolled", window.scrollY > 50);
 });
+
 
 // ========== GSAP ANIMATIONS ==========
 window.addEventListener("load", () => {
@@ -48,9 +50,31 @@ window.addEventListener("load", () => {
     duration: 2.9,
     ease: "power2.out"
 });
+gsap.from(".service-card", {
+    scrollTrigger: {
+        trigger: ".service-card",
+        start: "top 90%",
+        markers: true
+    },
+    opacity: 0,
+    y: 50,
+    duration: 0.6
+});
+gsap.from(".about-content > *", {
+    scrollTrigger: {
+        trigger: ".about",
+        start: "top 75%",
+    },
+    opacity: 0,
+    y: 30,
+    duration: 0.7,
+    stagger: 0.15,
+    ease: "power2.out"
 });
 
+});
 
+console.log(ScrollTrigger);
 // ========== BURGER MENU ==========
 const burger = document.querySelector(".burger");
 const mobileMenu = document.querySelector(".mobile-menu");
