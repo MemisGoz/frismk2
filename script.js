@@ -7,37 +7,67 @@ window.addEventListener("scroll", () => {
 });
 
 
+/**
+ * PAGE TRANSITION LOGIC
+ */
+
+// --- 1. THE ENTRANCE (Revealing the page after it loads) ---
+document.addEventListener("DOMContentLoaded", () => {
+    // We use fromTo to ensure it starts exactly at 0 (covering screen)
+    // and moves to -100 (hidden above)
+    gsap.fromTo(".page-transition", 
+        { yPercent: 0 }, 
+        {
+            yPercent: -100, 
+            duration: 1, 
+            ease: "expo.inOut",
+            delay: 0.1, // Small buffer to ensure the page is ready
+            onComplete: () => {
+                // Refresh ScrollTrigger and trigger any entry animations
+                if (typeof ScrollTrigger !== "undefined") {
+                    ScrollTrigger.refresh();
+                }
+                startPageAnimations?.();
+            }
+        }
+    );
+});
+
+// --- 2. THE EXIT (Covering the page when a link is clicked) ---
+document.querySelectorAll("a").forEach(link => {
+    const url = link.getAttribute("href");
+
+    // Filter to ensure we only animate internal page links
+    if (
+        url && 
+        !url.startsWith("#") && 
+        !url.startsWith("mailto") && 
+        !url.startsWith("tel") && 
+        link.target !== "_blank"
+    ) {
+        link.addEventListener("click", e => {
+            // Check if the link is to the same page to avoid getting stuck
+            if (url === window.location.pathname || url === window.location.href) return;
+
+            e.preventDefault();
+
+            // Slide the curtain DOWN from the top to cover the screen
+            gsap.to(".page-transition", {
+                yPercent: 0,
+                duration: 0.8,
+                ease: "power4.inOut",
+                onComplete: () => {
+                    window.location.href = url;
+                }
+            });
+        });
+    }
+});
+
 // ========== GSAP ANIMATIONS ==========
 window.addEventListener("load", () => {
-    gsap.from(".logo", {
-        opacity: 0,
-        y: -20,
-        duration: 0.8,
-        ease: "power2.out"
-    });
-
-    gsap.from(".nav-links li", {
-        opacity: 0,
-        y: -10,
-        duration: 0.6,
-        stagger: 0.1,
-        ease: "power2.out"
-    });
-
-    gsap.from(".hero-title", {
-        opacity: 0,
-        y: 40,
-        duration: 1,
-        ease: "power3.out"
-    });
-
-    gsap.from(".hero-subtitle", {
-        opacity: 0,
-        y: 30,
-        duration: 0.8,
-        delay: 0.2
-    });
-
+  
+   
     gsap.from(".btn", {
         opacity: 0,
         y: 40,
@@ -45,11 +75,7 @@ window.addEventListener("load", () => {
         ease: "power3.out"
     });
 
-    gsap.to(".hero", {
-    opacity: 1,
-    duration: 2.9,
-    ease: "power2.out"
-});
+ 
 gsap.from(".service-card", {
     scrollTrigger: {
         trigger: ".service-card",
@@ -63,11 +89,56 @@ gsap.from(".service-card", {
 gsap.from(".about-content > *", {
     scrollTrigger: {
         trigger: ".about",
-        start: "top 75%",
+        start: "top 55%",
     },
     opacity: 0,
     y: 30,
     duration: 0.7,
+    stagger: 0.15,
+    ease: "power2.out"
+});
+gsap.from(".story-text1", {
+    scrollTrigger: {
+        trigger: ".story",
+        start: "top 60%",
+    },
+    opacity: 0,
+    y: 30,
+    duration: 0.7,
+    stagger: 0.15,
+    ease: "power2.out"
+});
+
+gsap.from(".img-large", {
+    scrollTrigger: {
+        trigger: ".story",
+        start: "top 55%",
+    },
+    opacity: 0,
+    x: 40,
+    duration: 1,
+    ease: "power3.out"
+});
+
+gsap.from(".img-small", {
+    scrollTrigger: {
+        trigger: ".story",
+        start: "top 5%",
+    },
+    opacity: 0,
+    scale: 0.8,
+    duration: 1,
+    delay: 0.2,
+    ease: "power3.out"
+});
+gsap.from(".footer-col", {
+    scrollTrigger: {
+        trigger: ".footer",
+        start: "top 85%",
+    },
+    opacity: 0,
+    y: 30,
+    duration: 0.6,
     stagger: 0.15,
     ease: "power2.out"
 });
@@ -420,3 +491,43 @@ function horizontalLoop(items, config) {
   });
   return timeline;
 }
+
+
+function initMarquee(boxWidth, time) {
+    // 1. Select elements using standard DOM methods
+    const boxElements = document.querySelectorAll('.box');
+    const boxLength = boxElements.length;
+    const wrapperWidth = boxWidth * boxLength;
+    const windowWidth = window.innerWidth;
+
+    // 2. Apply styles to the parent and the boxes
+    if (boxLength > 0) {
+        const parent = boxElements[0].parentElement;
+        parent.style.left = `-${boxWidth}px`;
+        
+        boxElements.forEach(box => {
+            box.style.width = `${boxWidth}px`;
+        });
+    }
+
+    // 3. GSAP Logic (remains mostly the same, but uses the NodeList)
+    gsap.set(".box", {
+        x: (i) => i * boxWidth
+    });
+
+    gsap.to(".box", {
+        duration: time,
+        ease: "none",
+        x: `-=${wrapperWidth}`,
+        modifiers: {
+            x: gsap.utils.unitize((x) => {
+                // Modulo logic to wrap the boxes infinitely
+                return parseFloat(x + windowWidth + boxWidth) % wrapperWidth;
+            })
+        },
+        repeat: -1
+    });
+}
+
+// Usage
+initMarquee(190, 27);

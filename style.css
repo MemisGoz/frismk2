@@ -22,6 +22,16 @@ body {
     font-family: 'Inter', sans-serif;
     color: var(--text-dark);
 }
+.page-transition {
+    position: fixed;
+    inset: 0;
+    background: #111;
+    z-index: 9999;
+    pointer-events: none;
+    will-change: transform;
+    /* Start covered so there is no flash of content on load */
+    transform: translateY(0%);
+}
 
 /* ========== GLOBAL CLASSES ========== */
 .container {
@@ -31,7 +41,7 @@ body {
 }
 
 .btn {
-    padding: 0.9rem 1.6rem;
+    padding: 0.8rem 1.3rem;
     border-radius: 50px;
     font-weight: 600;
     text-decoration: none;
@@ -75,7 +85,7 @@ body {
 }
 
 .logo {
-    font-size: 3.4rem;
+    font-size: 3.1rem;
     font-weight: 700;
     text-decoration: none;
     color: var(--text-light);
@@ -142,8 +152,8 @@ body {
 
 /* ========== HERO ========== */
 .hero {
-    opacity: 0;
-    height: 100vh;
+    opacity: 1;
+    height: 90vh;
     background-color: #111;
     background:
         linear-gradient(
@@ -162,12 +172,14 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+ 
 }
 
 .hero-title {
-    font-size: clamp(3.5rem, 5vw, 4rem);
+    font-size: clamp(4.9rem, 5vw, 4rem);
     margin-bottom: 1rem;
     text-align: center;
+    
 }
 
 .hero-subtitle {
@@ -181,7 +193,28 @@ body {
     gap: 1rem;
     flex-wrap: wrap;
 }
-
+/* ========== marquee ========== */
+.wrapper{
+    width: 100%;
+    height: 65px;
+    margin: auto;
+    background: #000;
+    overflow: hidden;
+    bottom: 50%;
+}
+.box {
+    height:65px;
+    position:absolute;
+    background:transparent;
+    font-size: 30px;
+    line-height:65px;
+    text-align:center;
+    color: #fff;
+    text-transform: uppercase;
+}
+.boxes {
+    position:relative;
+}
 /* ========== SECTIONS (GENBRUGELIG) ========== */
 .section {
     padding: 5rem 0;
@@ -204,9 +237,14 @@ body {
 
 /* ========== SERVICES ========== */
 .services {
-    background: #f8f8f8;
+    background: #111;
 }
-
+.section-header > h2{
+    color: #fff;
+}
+.section-header > p{
+    color: #fff;
+}
 .services-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -254,6 +292,11 @@ body {
     .services-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+    .logo{font-size: 2.4rem;}
+    .hero-title {
+    font-size: clamp(3.4rem, 5vw, 4rem);
+   
+}
 }
 
 @media (max-width: 600px) {
@@ -279,7 +322,7 @@ body {
     /* Mobile menu (nav-links reused) */
     .nav-links.mobile-menu {
         position: fixed;
-        top: 80px;
+        top: 60px;
         left: 0;
         width: 100%;
         height: calc(100vh - 80px);
@@ -467,3 +510,249 @@ body {
     right: 40px;
   }
 }
+/* ========== Sisdte sektion ========== */
+/* ========== STORY SECTION ========== */
+.story{
+    background-color: #111;
+}
+.story-grid {
+    display: grid;
+    gap: 3rem;
+}
+
+.story-text p {
+    max-width: 520px;
+    line-height: 1.8;
+    color: #f8f8f8;
+    margin-bottom: 1.2rem;
+}
+
+.story-images {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.story-img {
+    overflow: hidden;
+    border-radius: 18px;
+}
+
+.story-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.img-large {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+}
+
+.img-small {
+    position: absolute;
+    bottom: -2rem;
+    left: -2rem;
+    width: 45%;
+    aspect-ratio: 1 / 1;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+/* Tablet+ */
+@media (min-width: 768px) {
+    .story-grid {
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+    }
+}
+/* ========== FOOTER ========== */
+.footer {
+    background: #1f1f1f;
+    color: #ccc;
+    padding: 4rem 1.5rem 2rem;
+}
+
+.footer-grid {
+    display: grid;
+    gap: 3rem;
+}
+
+.footer-logo {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.footer-desc {
+    max-width: 320px;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.footer-col h4 {
+    color: #fff;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.footer-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-list li {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.95rem;
+    margin-bottom: 0.6rem;
+}
+
+.footer-list a {
+    color: #ccc;
+    text-decoration: none;
+}
+
+.footer-list a:hover {
+    color: var(--accent);
+}
+
+/* Bottom */
+.footer-bottom {
+    border-top: 1px solid #222;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #777;
+}
+
+.footer-bottom a {
+    color: #777;
+    text-decoration: none;
+}
+
+.footer-bottom a:hover {
+    color: #fff;
+}
+
+/* Tablet+ */
+@media (min-width: 768px) {
+    .footer-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .footer-col.map { 
+        grid-column: span 3;
+    }
+}
+/* ========== pris ========== */
+.prices{
+    background-color: #111;
+}
+.price-group {
+    margin-bottom: 4rem;
+}
+
+.price-group h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+    color: #fff;
+}
+
+.price-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: #f8f8f8;
+}
+
+.price-list li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid #eee;
+    font-size: 0.95rem;
+}
+
+.price-list span:last-child {
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.price-list .divider {
+    border-bottom: none;
+    height: 1.2rem;
+}
+.priser-knap{
+    padding-top: 2rem;
+}
+/* ========== Kontakt ========== */
+.contact-section {
+  padding: 5rem 1.5rem;
+  background: #111;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  justify-content: center
+
+
+}
+
+.contact-card {
+  background: #333333;
+  padding: 2.5rem;
+  border-radius: 16px;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.contact-card span {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.contact-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+}
+
+.contact-card.primary {
+  background: #111;
+  color: #fff;
+}
+
+.map-section iframe {
+  width: 100%;
+  height: 450px;
+  border: none;
+}
+.contact-hero {
+    opacity: 1;
+    height: 60vh;
+    background-color: #111;
+    background:
+        linear-gradient(
+            rgba(0,0,0,0.55),
+            rgba(0,0,0,0.55)
+        ),
+        url("https://images.pexels.com/photos/7697208/pexels-photo-7697208.jpeg?auto=compress&cs=tinysrgb&w=1600")
+        center / cover no-repeat;
+    display: flex;
+    align-items: center;
+}
+
+
