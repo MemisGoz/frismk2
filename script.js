@@ -80,7 +80,7 @@ gsap.from(".service-card", {
     scrollTrigger: {
         trigger: ".service-card",
         start: "top 90%",
-        markers: true
+      
     },
     opacity: 0,
     y: 50,
@@ -145,7 +145,7 @@ gsap.from(".footer-col", {
 
 });
 
-console.log(ScrollTrigger);
+
 // ========== BURGER MENU ==========
 const burger = document.querySelector(".burger");
 const mobileMenu = document.querySelector(".mobile-menu");
