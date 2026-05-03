@@ -64,6 +64,31 @@ document.querySelectorAll("a").forEach(link => {
     }
 });
 
+// --- 3. THE BFCache FIX (Handling the back/forward buttons) ---
+window.addEventListener("pageshow", (event) => {
+    if (event.persisted) {
+        
+        // ✅ Reset mobile menu to its default visible state
+        gsap.set(mobileMenu, { opacity: 1, y: 0, clearProps: "all" });
+        menuOpen = false;
+        header.classList.remove("menu-open");
+
+        gsap.fromTo(".page-transition", 
+            { yPercent: 0 }, 
+            {
+                yPercent: -100, 
+                duration: 1, 
+                ease: "expo.inOut",
+                onComplete: () => {
+                    if (typeof ScrollTrigger !== "undefined") {
+                        ScrollTrigger.refresh();
+                    }
+                    startPageAnimations?.(); 
+                }
+            }
+        );
+    }
+});
 // ========== GSAP ANIMATIONS ==========
 window.addEventListener("load", () => {
   
